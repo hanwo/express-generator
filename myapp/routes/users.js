@@ -20,18 +20,23 @@ router.get('/', function (req, res, next) {
         connection.query(`select * from users`, (err, rows, fields) => {
             res.json(rows);
         })
-    }
-    next();
-});
-
-router.get('/', function (req, res, next) {
-    if (req.query.name) {
+    } else {
         let name = req.query.name;
         connection.query(`select * from users where name = '${name}'`, (err, rows, fields) => {
             res.json(rows);
         })
     }
+    // next();
 });
+
+// router.get('/', function (req, res, next) {
+//     if (req.query.name) {
+//         let name = req.query.name;
+//         connection.query(`select * from users where name = '${name}'`, (err, rows, fields) => {
+//             res.json(rows);
+//         })
+//     }
+// });
 
 router.post('/', function (req, res, next) {
     let name = req.body.name;
