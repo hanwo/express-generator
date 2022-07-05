@@ -92,7 +92,13 @@ router.get('/', function (req, res, next) {
     let query = 'select b.id, b.title, b.content, b.date, b.writer, u.name as name from board b JOIN users u on u.id = b.writer where'
     // 전체 검색
     if (Object.keys(req.query).length === 0) {
-        connection.query(`select b.*, u.name from board b JOIN users u on b.writer = u.id;`, (err, rows, fields) => {
+        // connection.query(`select b.*, u.name from board b JOIN users u on b.writer = u.id;`, (err, rows, fields) => {
+        //     res.json(rows);
+        // })
+        connection.query(`select b.id, b.title, b.content, b.date, b.writer, u.name, r.id as rid, r.content as rContent
+from board b
+    JOIN users u on b.writer = u.id
+    JOIN reply r on b.id = r.board_id;`, (err, rows, fields) => {
             res.json(rows);
         })
     } else { // 검색
